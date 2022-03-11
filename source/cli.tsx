@@ -6,7 +6,7 @@ import App from './ui';
 
 meow(`
 	Usage
-	  $ quote
+	  $ code-quotes
 `, {
 	flags: {}
 });
