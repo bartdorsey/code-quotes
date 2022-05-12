@@ -1,26 +1,25 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import Quote from "./Quote";
-
 import useQuote from "./useQuote";
+import Spinner from 'ink-spinner';
+import { Box } from 'ink';
 
 
-const App: FC<{ name?: string }> = () => {
+const App: FC<{ name?: string, color?: string  }> = ({ color = '#FFFFFF' }) => {
 	const { quote, loading } = useQuote();
-	const [colorValue, setColorValue] = useState(0);
 
-	useEffect(() => {
-		if (colorValue >= 255 || loading) {
-			return;
-		}
-		setTimeout(() => {
-			setColorValue(colorValue + 1);
-		}, 1);
-	}, [colorValue, loading]);
+	if (loading) {
+		return (
+			<Box justifyContent="center">
+				<Spinner type="dots" />
+			</Box>
+		)
+	}
 
 	return (
 		<Quote
 			quote={quote}
-			colorValue={colorValue}
+			color={color}
 		/>
 	);
 

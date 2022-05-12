@@ -4,6 +4,6 @@ interface Quote {
 }
 
 type QuoteProps = {
-	colorValue: number,
+	color: string,
 	quote: Quote
 }

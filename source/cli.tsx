@@ -4,11 +4,23 @@ import {render} from 'ink';
 import meow from 'meow';
 import App from './ui';
 
-meow(`
+const cli = meow(`
 	Usage
 	  $ code-quotes
+
+	Options
+	  --color, -c Specify a hex border color
+
+	Examples
+		code-quotes -c #A30000
+
 `, {
-	flags: {}
+	flags: {
+		color: {
+			type: 'string',
+			alias: 'c'
+		}
+	}
 });
 
-render(<App/>);
+render(<App color={cli.flags.color}/>);

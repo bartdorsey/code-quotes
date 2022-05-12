@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, Box } from "ink";
 
-export default function Quote({ colorValue, quote }: QuoteProps) {
-	const borderColorString = `rgb(0,0, ${colorValue})`;
-	const textColor = `rgb(${colorValue}, ${colorValue}, ${colorValue})`;
+export default function Quote({ color, quote }: QuoteProps) {
+	const borderColorString = color;
+	const textColor = `#FFFFFF`;
 
 	return (
 		<Box justifyContent="center">
