@@ -5,13 +5,15 @@ import useCache from "./useCache";
 import debug from 'debug';
 const log = debug('useQuote')
 
-const QUOTE_API = "http://programming-quotes-api.herokuapp.com/quotes/";
+const QUOTE_API = "http://programming-quotes-api.herokuapp.com/quotes/"
+const QUOTE_CACHE_FILE = 'quotes.json'
+const CACHE_HOURS = 24
 
 export default function useQuote() {
 	const [quote, setQuote] = useState<Quote>({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState('');
-	const [quotes, setQuotes, cacheLoading] = useCache('quotes.json', 24);
+	const [quotes, setQuotes, cacheLoading] = useCache(QUOTE_CACHE_FILE, CACHE_HOURS);
 
 	log('useQuotes running', quote, loading);
 

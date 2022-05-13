@@ -21,6 +21,7 @@ export default function useCache(filename: string, hours: number = 1): any {
 
 	async function setCache(data: any) {
 		try {
+			log(`Writing new cache file, populating cache...`)
 			await fs.writeFile(cacheFile, JSON.stringify(data), 'utf-8')
 			setCacheData(data);
 		}
@@ -36,23 +37,28 @@ export default function useCache(filename: string, hours: number = 1): any {
 			await createDirectory(CACHE_DIR)
 
 			try {
+				log(`Checking time on cache file`);
 				const { ctime } = await fs.stat(cacheFile)
 				const now = new Date(Date.now())
-				if (differenceInHours(now, ctime) > hours) {
+				log(`Timestamp: ${ctime}, Now: ${now}`)
+				if (differenceInHours(now, ctime) >= hours) {
 					log(`Removing old cache`);
 					await fs.unlink(cacheFile)
+					setLoading(false)
+					return;
 				}
 			}
 			catch (e) {
 				log(e);
-				log(`Writing empty cache file`)
-				await fs.writeFile(cacheFile, 'utf-8')
-				console.error(e);
+				log(`No cache file found`)
+				setLoading(false)
+				return;
 			}
 
 			try {
-				log(`Reading cache file`)
+				log(`Attempting to read cache file`)
 				const contents = await fs.readFile(cacheFile, 'utf-8')
+				log(`Got contents of cache file`)
 				const data = JSON.parse(contents);
 				log(`Setting cache data`);
 				setCacheData(data);
