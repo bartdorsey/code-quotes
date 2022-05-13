@@ -6,7 +6,7 @@ import { Box } from 'ink';
 
 
 const App: FC<{ name?: string, color?: string  }> = ({ color = '#FFFFFF' }) => {
-	const { quote, loading } = useQuote();
+	const { quote, loading, error } = useQuote();
 
 	if (loading) {
 		return (
@@ -18,7 +18,7 @@ const App: FC<{ name?: string, color?: string  }> = ({ color = '#FFFFFF' }) => {
 
 	return (
 		<Quote
-			quote={quote}
+			quote={quote || error}
 			color={color}
 		/>
 	);
