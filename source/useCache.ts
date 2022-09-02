@@ -6,10 +6,20 @@ import path from 'path'
 import debug from 'debug'
 const log = debug('cache:');
 
-if (!process.env['HOME']) {
-	throw "no $HOME environment variable"
+let home_path: string;
+
+
+if (process.env['HOME']) {
+	home_path = process.env['HOME'];
 }
-const GLOBAL_CONFIG_DIR = path.join(process.env['HOME'],'.config')
+else if (process.env['USERPROFILE']) {
+	home_path = process.env['USERPROFILE'];
+}
+else {
+	throw "no $HOME or $USERPROFILE environment variable"
+}
+
+const GLOBAL_CONFIG_DIR = path.join(home_path, '.config')
 const CONFIG_DIR = path.join(GLOBAL_CONFIG_DIR, 'code-quotes')
 const CACHE_DIR = path.join(CONFIG_DIR, 'cache');
 
